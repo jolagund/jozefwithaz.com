@@ -80,14 +80,23 @@ section > h2 {
 
 .track {
   display: grid;
-  grid-template-columns: auto 1fr auto auto auto auto;
+  grid-template-columns: auto auto 1fr auto auto auto auto;
   gap: 1rem;
-  align-items: baseline;
+  align-items: center;
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--rule);
 }
 
 .track:last-child { border-bottom: none; }
+
+.track-art {
+  width: 56px;
+  height: 56px;
+  display: block;
+  object-fit: cover;
+  background: var(--rule);
+}
+.track-art[hidden] { display: none; }
 
 .track-number { opacity: 0.5; }
 .track-title { text-transform: uppercase; letter-spacing: 0.04em; }
@@ -122,13 +131,16 @@ section > h2 {
 
 @media (max-width: 640px) {
   .track {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto auto 1fr auto;
     grid-template-areas:
-      "num title dur"
-      ".   links links"
-      ".   play  play";
+      "art num title dur"
+      "art .   links links"
+      "art .   play  play";
+    column-gap: 0.75rem;
     row-gap: 0.25rem;
+    align-items: start;
   }
+  .track-art { grid-area: art; align-self: center; }
   .track-number { grid-area: num; }
   .track-title { grid-area: title; }
   .track-duration { grid-area: dur; }

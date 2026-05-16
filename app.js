@@ -19,6 +19,16 @@ function renderTrack(t) {
   li.className = "track";
   li.dataset.file = t.file || "";
 
+  const art = document.createElement("img");
+  art.className = "track-art";
+  art.alt = "";
+  art.loading = "lazy";
+  art.decoding = "async";
+  art.width = 56;
+  art.height = 56;
+  if (t.art) art.src = t.art;
+  else art.hidden = true;
+
   const number = document.createElement("span");
   number.className = "track-number";
   number.textContent = t.number;
@@ -48,7 +58,7 @@ function renderTrack(t) {
   progress.setAttribute("aria-valuemax", "100");
   progress.setAttribute("aria-valuenow", "0");
 
-  li.append(number, title, duration, play, spotify, apple, progress);
+  li.append(art, number, title, duration, play, spotify, apple, progress);
   return li;
 }
 
