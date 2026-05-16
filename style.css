@@ -7,25 +7,40 @@
 }
 
 :root {
-  --bg: #0a0a0a;
+  --bg: #08182a;
   --fg: #e8e4d8;
-  --rule: #2a2a2a;
+  --rule: rgba(232, 228, 216, 0.15);
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --content-width: 640px;
 }
 
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 35%, rgba(4, 12, 22, 0.0) 0%, rgba(4, 12, 22, 0.35) 80%, rgba(4, 12, 22, 0.55) 100%),
+    url("img/bg/ocean.webp") 50% 20% / cover no-repeat;
+  background-color: var(--bg);
+}
+
 *, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--bg);
+}
 
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
   color: var(--fg);
   font-family: var(--font-mono);
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
+
+body { background: transparent; }
 
 main {
   max-width: var(--content-width);
