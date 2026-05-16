@@ -71,3 +71,67 @@ section > h2 {
   html, body { font-size: 14px; }
   main { padding: 2.5rem 1.25rem 4rem; }
 }
+
+.tracks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.track {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto auto;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.track:last-child { border-bottom: none; }
+
+.track-number { opacity: 0.5; }
+.track-title { text-transform: uppercase; letter-spacing: 0.04em; }
+.track-duration { opacity: 0.5; font-variant-numeric: tabular-nums; }
+.track-play, .track-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.track-play[hidden], .track-link[hidden] { display: none; }
+.track-play:hover, .track-link:hover { text-decoration: underline; }
+
+.track-progress {
+  grid-column: 1 / -1;
+  height: 1px;
+  background: var(--fg);
+  width: 0;
+  transition: width 0.1s linear;
+}
+
+.tracks-fallback {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .track {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "num title dur"
+      ".   links links"
+      ".   play  play";
+    row-gap: 0.25rem;
+  }
+  .track-number { grid-area: num; }
+  .track-title { grid-area: title; }
+  .track-duration { grid-area: dur; }
+  .track-play { grid-area: play; justify-self: start; }
+  .track-link { display: inline; }
+}
