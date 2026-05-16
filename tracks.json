@@ -3,9 +3,9 @@
     "number": "01",
     "title": "Dunkin' Flow",
     "art": "img/covers/dunkin-flow.jpg",
-    "file": "audio/dunkin-flow.mp3",
-    "duration": "0:27",
-    "spotify": "https://open.spotify.com/track/75ezScmzHLaRxBMWxDGtmE?si=JVDRlW8YSOCurEpqw3GwSw",
+    "spotify_embed": "https://open.spotify.com/embed/track/75ezScmzHLaRxBMWxDGtmE",
+    "apple_embed": "https://embed.music.apple.com/gb/album/dunkin-flow/1826198844?i=1826198845",
+    "spotify": "https://open.spotify.com/track/75ezScmzHLaRxBMWxDGtmE",
     "apple": "https://music.apple.com/gb/album/dunkin-flow/1826198844?i=1826198845"
   }
 ]

@@ -17,17 +17,9 @@ async function loadTracks() {
 function renderTrack(t) {
   const li = document.createElement("li");
   li.className = "track";
-  li.dataset.file = t.file || "";
 
-  const art = document.createElement("img");
-  art.className = "track-art";
-  art.alt = "";
-  art.loading = "lazy";
-  art.decoding = "async";
-  art.width = 56;
-  art.height = 56;
-  if (t.art) art.src = t.art;
-  else art.hidden = true;
+  const head = document.createElement("div");
+  head.className = "track-head";
 
   const number = document.createElement("span");
   number.className = "track-number";
@@ -37,95 +29,34 @@ function renderTrack(t) {
   title.className = "track-title";
   title.textContent = t.title;
 
-  const duration = document.createElement("span");
-  duration.className = "track-duration";
-  duration.textContent = t.duration || "";
+  head.append(number, title);
+  li.appendChild(head);
 
-  const play = document.createElement("button");
-  play.className = "track-play";
-  play.type = "button";
-  play.setAttribute("aria-pressed", "false");
-  play.textContent = "[ Play ]";
-  if (!t.file) play.hidden = true;
+  if (t.spotify_embed) {
+    li.appendChild(makeEmbed(t.spotify_embed, "Spotify embed: " + t.title, 152, "spotify"));
+  }
+  if (t.apple_embed) {
+    li.appendChild(makeEmbed(t.apple_embed, "Apple Music embed: " + t.title, 175, "apple"));
+  }
 
-  const spotify = makeLink(t.spotify, "Spotify");
-  const apple = makeLink(t.apple, "Apple");
-
-  const progress = document.createElement("div");
-  progress.className = "track-progress";
-  progress.setAttribute("role", "progressbar");
-  progress.setAttribute("aria-valuemin", "0");
-  progress.setAttribute("aria-valuemax", "100");
-  progress.setAttribute("aria-valuenow", "0");
-
-  li.append(art, number, title, duration, play, spotify, apple, progress);
   return li;
 }
 
-function makeLink(href, label) {
-  const a = document.createElement("a");
-  a.className = "track-link";
-  a.textContent = label;
-  if (href) a.href = href;
-  else a.hidden = true;
-  a.target = "_blank";
-  a.rel = "noopener";
-  return a;
+function makeEmbed(src, title, height, kind) {
+  const iframe = document.createElement("iframe");
+  iframe.className = "track-embed track-embed-" + kind;
+  iframe.src = src;
+  iframe.title = title;
+  iframe.width = "100%";
+  iframe.height = String(height);
+  iframe.loading = "lazy";
+  iframe.setAttribute("frameborder", "0");
+  iframe.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture");
+  iframe.setAttribute("allowtransparency", "true");
+  return iframe;
 }
 
 loadTracks();
-
-const player = document.getElementById("player");
-let currentRow = null;
-let rafId = null;
-
-document.addEventListener("click", (e) => {
-  const btn = e.target.closest(".track-play");
-  if (!btn) return;
-  const row = btn.closest(".track");
-  const file = row.dataset.file;
-  if (!file) return;
-
-  if (currentRow === row && !player.paused) {
-    stopPlayback();
-    return;
-  }
-
-  stopPlayback();
-  currentRow = row;
-  player.src = file;
-  player.play();
-  btn.textContent = "[ Stop ]";
-  btn.setAttribute("aria-pressed", "true");
-  tickProgress();
-});
-
-player.addEventListener("ended", stopPlayback);
-
-function stopPlayback() {
-  if (!currentRow) return;
-  const btn = currentRow.querySelector(".track-play");
-  const progress = currentRow.querySelector(".track-progress");
-  btn.textContent = "[ Play ]";
-  btn.setAttribute("aria-pressed", "false");
-  progress.style.width = "0";
-  progress.setAttribute("aria-valuenow", "0");
-  player.pause();
-  player.removeAttribute("src");
-  player.load();
-  currentRow = null;
-  if (rafId) cancelAnimationFrame(rafId);
-  rafId = null;
-}
-
-function tickProgress() {
-  if (!currentRow) return;
-  const progress = currentRow.querySelector(".track-progress");
-  const pct = player.duration ? (player.currentTime / player.duration) * 100 : 0;
-  progress.style.width = pct + "%";
-  progress.setAttribute("aria-valuenow", String(Math.round(pct)));
-  rafId = requestAnimationFrame(tickProgress);
-}
 
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());

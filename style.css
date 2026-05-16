@@ -39,17 +39,27 @@ a {
 }
 a:hover { text-decoration: underline; }
 
+.site-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
 .site-header h1 {
-  font-size: 1rem;
+  font-size: 3.5rem;
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   margin: 0;
+  line-height: 1;
 }
 .site-header .tagline {
-  margin: 0.25rem 0 0;
+  margin: 1rem 0 0;
   opacity: 0.6;
   font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 640px) {
+  .site-header h1 { font-size: 2.25rem; letter-spacing: 0.15em; }
 }
 
 section {
@@ -79,73 +89,36 @@ section > h2 {
 }
 
 .track {
-  display: grid;
-  grid-template-columns: auto auto 1fr auto auto auto auto;
-  gap: 1rem;
-  align-items: center;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--rule);
-}
-
-.track:last-child { border-bottom: none; }
-
-.track-art {
-  width: 56px;
-  height: 56px;
   display: block;
-  object-fit: cover;
-  background: var(--rule);
+  padding: 0 0 2rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 2rem;
 }
-.track-art[hidden] { display: none; }
+.track:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
+.track-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
 .track-number { opacity: 0.5; }
 .track-title { text-transform: uppercase; letter-spacing: 0.04em; }
-.track-duration { opacity: 0.5; font-variant-numeric: tabular-nums; }
-.track-play, .track-link {
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.track-play[hidden], .track-link[hidden] { display: none; }
-.track-play:hover, .track-link:hover { text-decoration: underline; }
 
-.track-progress {
-  grid-column: 1 / -1;
-  height: 1px;
-  background: var(--fg);
-  width: 0;
-  transition: width 0.1s linear;
+.track-embed {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  margin-bottom: 0.75rem;
 }
+.track-embed:last-child { margin-bottom: 0; }
 
 .tracks-fallback {
   list-style: none;
   margin: 0;
   padding: 0;
   opacity: 0.8;
-}
-
-@media (max-width: 640px) {
-  .track {
-    grid-template-columns: auto auto 1fr auto;
-    grid-template-areas:
-      "art num title dur"
-      "art .   links links"
-      "art .   play  play";
-    column-gap: 0.75rem;
-    row-gap: 0.25rem;
-    align-items: start;
-  }
-  .track-art { grid-area: art; align-self: center; }
-  .track-number { grid-area: num; }
-  .track-title { grid-area: title; }
-  .track-duration { grid-area: dur; }
-  .track-play { grid-area: play; justify-self: start; }
-  .track-link { display: inline; }
 }
 
 .muted { opacity: 0.5; }
